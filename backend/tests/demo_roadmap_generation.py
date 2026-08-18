@@ -12,7 +12,7 @@ def demo_roadmap():
     # 1. Login
     print("\n1. Logging in as Alisher...")
     login_data = {
-        "email": "amutalov001@gmail.com", # Assuming email based on username search earlier
+        "email": "user@example.com", # Generic test email for sample code
         "password": "pass1234"
     }
     # Double check email for Alisher first in the script if needed, 
