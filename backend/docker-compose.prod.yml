@@ -1,0 +1,79 @@
+version: '3.8'
+
+services:
+  web:
+    build: .
+    command: >
+      sh -c "sleep 3 &&
+             python manage.py migrate --noinput &&
+             python manage.py collectstatic --noinput &&
+             daphne -b 0.0.0.0 -p 8000 edtrack.asgi:application"
+    volumes:
+      - .:/app
+      - ./staticfiles:/app/staticfiles
+      - ./media:/app/media
+    ports:
+      - "127.0.0.1:8000:8000"
+    env_file:
+      - .env
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_started
+    restart: always
+
+  db:
+    image: postgres:15-alpine
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    env_file:
+      - .env
+    environment:
+      - POSTGRES_DB=${POSTGRES_DB:-iqro_db}
+      - POSTGRES_USER=${POSTGRES_USER:-iqro_user}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-iqro_secure_pass_2026}
+    ports:
+      - "127.0.0.1:5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 2s
+      timeout: 5s
+      retries: 10
+    restart: always
+
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "127.0.0.1:6379:6379"
+    restart: always
+
+  celery:
+    build: .
+    command: celery -A edtrack worker -l info --concurrency=1
+    volumes:
+      - .:/app
+      - ./media:/app/media
+    env_file:
+      - .env
+    depends_on:
+      - db
+      - redis
+      - web
+    restart: always
+
+  celery-beat:
+    build: .
+    command: celery -A edtrack beat -l info
+    volumes:
+      - .:/app
+    env_file:
+      - .env
+    depends_on:
+      - db
+      - redis
+      - web
+    restart: always
+
+volumes:
+  postgres_data:

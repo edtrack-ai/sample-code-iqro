@@ -1,0 +1,102 @@
+[
+  {
+    "model": "users.subscriptiontier",
+    "pk": 1,
+    "fields": {
+      "name": "Free",
+      "slug": "free",
+      "price": "0.00",
+      "interval": "month",
+      "credits": 10,
+      "stripe_price_id": null,
+      "is_active": true,
+      "features": [
+        "1 AI Roadmap per month",
+        "Basic AI Chat",
+        "Community Support"
+      ]
+    }
+  },
+  {
+    "model": "users.subscriptiontier",
+    "pk": 2,
+    "fields": {
+      "name": "Pro",
+      "slug": "pro",
+      "price": "4.99",
+      "interval": "month",
+      "credits": 1000,
+      "stripe_price_id": "price_pro_placeholder",
+      "is_active": true,
+      "features": [
+        "1 AI Roadmap per month (up to 60 lessons)",
+        "1,000 Credits (1,000,000 tokens) included",
+        "Daily AI Chat limit: 10,000 tokens",
+        "Interactive Quizzes & Flashcards",
+        "Priority Support"
+      ]
+    }
+  },
+  {
+    "model": "users.subscriptiontier",
+    "pk": 3,
+    "fields": {
+      "name": "Expert",
+      "slug": "expert",
+      "price": "29.99",
+      "interval": "month",
+      "credits": 6500,
+      "stripe_price_id": "price_expert_placeholder",
+      "is_active": true,
+      "features": [
+        "Everything in Pro",
+        "Custom Learning Paths",
+        "Early Access to New Models",
+        "1-on-1 AI Mentorship"
+      ]
+    }
+  },
+  {
+    "model": "payments.creditpack",
+    "pk": 1,
+    "fields": {
+      "name": "Small Pack",
+      "credits": 1000,
+      "price": "4.99",
+      "stripe_price_id": "price_small_placeholder",
+      "is_active": true,
+      "description": "1,000 Credits (1,000,000 tokens) to boost your learning."
+    }
+  },
+  {
+    "model": "payments.creditpack",
+    "pk": 2,
+    "fields": {
+      "name": "Medium Pack",
+      "credits": 2200,
+      "price": "9.99",
+      "stripe_price_id": "price_medium_placeholder",
+      "is_active": true,
+      "description": "2,200 Credits (2,200,000 tokens) for consistent learners."
+    }
+  },
+  {
+    "model": "payments.creditpack",
+    "pk": 3,
+    "fields": {
+      "name": "Large Pack",
+      "credits": 5700,
+      "price": "24.99",
+      "stripe_price_id": "price_large_placeholder",
+      "is_active": true,
+      "description": "5,700 Credits (5,700,000 tokens) for ultimate power users."
+    }
+  },
+  {
+    "model": "payments.creditpricing",
+    "pk": 1,
+    "fields": {
+      "price_per_credit_usd": "0.0049"
+    }
+  }
+]
