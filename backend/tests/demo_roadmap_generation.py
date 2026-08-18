@@ -10,13 +10,11 @@ def demo_roadmap():
     print("--- Starting Roadmap Generation Demo ---")
     
     # 1. Login
-    print("\n1. Logging in as Alisher...")
+    print("\n1. Logging in as test user...")
     login_data = {
         "email": "user@example.com", # Generic test email for sample code
         "password": "pass1234"
     }
-    # Double check email for Alisher first in the script if needed, 
-    # but I'll use username if login allows it or just use the first user.
     
     # Let's try login with username/password if that's supported or just use a token from shell
     pass
@@ -31,7 +29,9 @@ if __name__ == "__main__":
     from apps.users.models import User
     from rest_framework_simplejwt.tokens import RefreshToken
     
-    user = User.objects.get(username='Alisher')
+    user = User.objects.filter(username='testuser').first() or User.objects.first()
+    if not user:
+        user = User.objects.create_user(username='testuser', email='user@example.com', password='password123')
     refresh = RefreshToken.for_user(user)
     token = str(refresh.access_token)
     
